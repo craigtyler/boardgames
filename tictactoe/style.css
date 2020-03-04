@@ -1,0 +1,13 @@
+canvas { width: 400px;
+        border: 1px solid black;
+        /*border-collapse: collapse */}
+td     { width: 4px; height: 4px; margin: 0px; padding: 0px; }
+
+.cells  { height:120; width: 120; align-self: center;
+        border: 2px solid black; text-align: center;}
+
+.cells:hover  { background-color: rgb(24, 202, 24);}
+
+.clicked { height:120; width: 120; align-self: center; 
+        border: 2px solid black; text-align: center;
+        background-color: grey; }
