@@ -1,13 +1,24 @@
 var turn = 'black',
     bCaptures,
-    rCaptures;
+    rCaptures
+    board = [['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','',''],
+             ['','','','','','','','','','']];
 
 function startGame(){
     createCanvas();
     createAndPlacePieces();
+    console.log(board);
 }
 
-
+//aka create board
 function createCanvas(){
 
     var side = 10;
@@ -34,16 +45,17 @@ function createCanvas(){
             var cell = document.createElement('td');
 
             cell.innerHTML = ''
-
-            cell.addEventListener('click', handleTurn,false)
+            cell.id = i + "," + j
 
             if(colorBlackCell == true)
             {
-                cell.className = 'black';
+                //cell.className = 'black';
+                cell.innerHTML = '<img src=./blacksq.png>'
             }
             else if(colorBlackCell == false)
             {
-                cell.className = 'red';
+                cell.innerHTML = '<img src=./redsq.png>'
+                //cell.className = 'red';
             }
             //once we have drawn the color, flip to the next color
             colorBlackCell = !colorBlackCell
@@ -65,9 +77,7 @@ function createAndPlacePieces() {
         {
             if(counter < 15)
             {
-                checker = createElement('td');
-                checker.className = 'checker';
-                cell.appendChild(checker);
+                
             }
             if(counter > 35)
             {

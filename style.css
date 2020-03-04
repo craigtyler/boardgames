@@ -1,12 +1,10 @@
 .red { height:60PX; width: 60PX; align-self: center; 
     border: 2px solid black; text-align: center;
-    background-color: red;}
+    }
 .black { height:60px; width: 60PX; align-self: center; 
     border: 2px solid black; text-align: center;
-    background-color: black;}
-.checker {
-    height: 25px;
-    width: 25px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;  position: absolute; }
+    }
+img {
+     border: 5px solid grey; float: left; display:inline-flex;
+     clear: left; overflow : auto;
+}
