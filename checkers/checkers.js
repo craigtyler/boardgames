@@ -10,12 +10,12 @@ var turn = 'black',
              ['','','','','','','','','',''],
              ['','','','','','','','','',''],
              ['','','','','','','','','',''],
-             ['','','','','','','','','','']];
+             ['','','','','','','','','','']
+            ];
 
 function startGame(){
     createCanvas();
     createAndPlacePieces();
-    console.log(board);
 }
 
 //aka create board
@@ -49,13 +49,13 @@ function createCanvas(){
 
             if(colorBlackCell == true)
             {
-                //cell.className = 'black';
-                cell.innerHTML = '<img src=./blacksq.png>'
+                cell.className = 'black';
+                cell.innerHTML = '<img src=./img/blacksq.png>'
             }
             else if(colorBlackCell == false)
             {
-                cell.innerHTML = '<img src=./redsq.png>'
-                //cell.className = 'red';
+                cell.innerHTML = '<img src=./img/redsq.png>'
+                cell.className = 'red';
             }
             //once we have drawn the color, flip to the next color
             colorBlackCell = !colorBlackCell
@@ -73,19 +73,22 @@ function createAndPlacePieces() {
     var counter = 0;
 
     cells.forEach(cell => {
+        var cords = cell.id.split(',');
+        //console.log(cords);
         if(cell.className == 'black')
         {
             if(counter < 15)
             {
-                
+                board[ cords[0] ] [ cords[1]] = 'black';
             }
             if(counter > 35)
             {
-
+                board[ cords[0] ] [ cords[1] ] = 'red';
             }
             counter++;
         }
     })
+    console.log(board);
 }
 
 function handleTurn() {

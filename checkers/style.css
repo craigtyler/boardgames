@@ -1,8 +1,8 @@
 .red { height:60PX; width: 60PX; align-self: center; 
-    border: 2px solid black; text-align: center;
+    text-align: center;
     }
 .black { height:60px; width: 60PX; align-self: center; 
-    border: 2px solid black; text-align: center;
+    text-align: center;
     }
 img {
      border: 5px solid grey; float: left; display:inline-flex;
