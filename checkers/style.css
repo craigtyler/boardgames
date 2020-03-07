@@ -1,14 +1,17 @@
+table { border-collapse: collapse;}
+
 .red { height:60PX; width: 60PX; align-self: center; 
-    text-align: center; background-color: red;
+    text-align: center; background-color: red; 
+    border: 3px solid grey;
     }
 .black { height:60px; width: 60PX; align-self: center; 
     text-align: center; background-color: black;
-    }
+    border: 3px solid grey}
 .checkerRed {
     height: 25px;
     width: 25px;
     background-color: red;
-    border: grey 1px solid;
+    border: grey 5px solid;
     border-radius: 50%;
     display: inline-block;
     }
@@ -16,13 +19,17 @@
     height: 25px;
     width: 25px;
     background-color: #1f1f1f;
-    border: grey 1px solid;
+    border: grey 5px solid;
     border-radius: 50%;
     display: inline-block;
     }
-/*
-img {
-     border: 5px solid grey; float: left; display:inline-flex;
-     clear: left; overflow : auto;
-}
-*/
+.selected {
+    width: 50px;
+    height: 23px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 10px gold;}
+.selectedSq {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 10px gold;}

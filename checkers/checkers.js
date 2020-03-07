@@ -82,7 +82,7 @@ function createAndPlacePieces() {
             //init the first 3 rows of the board 
             if(counter < 15)
             {
-                board[ cords[0] ] [ cords[1]] = 'bp';
+                board[ cords[0] ] [ cords[1]] = 'rp';
                 var checker = document.createElement('td');
                 checker.className = "checkerRed";
                 checker.id = cell.id
@@ -91,7 +91,7 @@ function createAndPlacePieces() {
             }   
             else if(counter > 34)
             {
-                board[ cords[0] ] [ cords[1] ] = 'rp';
+                board[ cords[0] ] [ cords[1] ] = 'bp';
                 var checker = document.createElement('td');
                 checker.className = "checkerBlack";
                 checker.id = cell.id
@@ -124,12 +124,11 @@ function handleTurn(e) {
         switch(movement){
             case "moveDown":
                 console.log('moving down');
-                () =>{
-                    var picked = false
-                }
+                showAvaliableMoves(this)
                 break;
             case "moveUp":
                 console.log('move up');
+                showAvaliableMoves(this)
                 break;
             case "uncaught":
                 console.log("uh oh");
@@ -138,7 +137,108 @@ function handleTurn(e) {
     }
 }
 
-function moveChecker(movement, location) {
+function showAvaliableMoves(checker) {
+    //[x,y] for ref
+    //!for red to move down, it is adding in the x column, moving right (if looking at board on 
+    //red side) is negative in y and positive in y to move left
+
+    //for black to move up, it is negative in x column, moving right positive in y, left negative in x
+
+    //get the cords for the checker
+    var cords = checker.id.split(',');
+
+    //pull them from the board
+    //check to see if the board has possible movements based on checkers current pos
+    
+    var tempGlow1;
+    var tempGlow2;
+    var tempGlowB;
+
+    //first find out what color this piece is
+    switch(checker.className){
+
+        case 'checkerRed':
+
+            //a, down, b left, c right
+            var a = parseInt(cords[0]) + 1;
+            var b = parseInt(cords[1]) - 1;
+            var c = parseInt(cords[1]) + 1;
+
+            console.log(a + " " + b + " or " + c)
+
+            var posmove1 = board[ parseInt(cords[0]) + 1] [parseInt(cords[1]) + 1];
+            var posmove2 = board[ parseInt(cords[0]) + 1] [parseInt(cords[1]) - 1];
+
+            if(posmove1 == 'b')
+            {
+                //create the glow for the clicked checker's next posible positions
+                var pos = document.getElementById(String(a+","+b))
+                if(pos != null)
+                {
+                    tempGlow1 = document.createElement('td');
+                    tempGlow1.className = 'selectedSq';
+                    pos.appendChild(tempGlow1);
+                }
+            }
+            if(posmove2 == 'b') 
+            {
+                //create the glow for the clicked checker's next posible positions
+                var pos = document.getElementById(String(a+","+c))
+                if(pos != null)
+                {
+                    tempGlow2 = document.createElement('td');
+                    tempGlow2.className = 'selectedSq';
+                    pos.appendChild(tempGlow2);
+                }
+            }
+            break;
+
+        case 'checkerBlack':
+
+            //a, down, b left, c right
+            var a = parseInt(cords[0]) - 1;
+            var b = parseInt(cords[1]) - 1;
+            var c = parseInt(cords[1]) + 1;
+
+            var posmove1 = board[ parseInt(cords[0]) - 1] [parseInt(cords[1]) + 1];
+            var posmove2 = board[ parseInt(cords[0]) - 1] [parseInt(cords[1]) - 1];
+
+            if( posmove1 == 'b')
+            {
+                //create the glow for the clicked checker's next posible positions
+                var pos = document.getElementById(String(a+","+b))
+                if(pos != null)
+                {
+                    tempGlow1 = document.createElement('td');
+                    tempGlow1.className = 'selectedSq';
+                    pos.appendChild(tempGlow1);
+                }
+            }
+            if( posmove2 == 'b')
+            {
+                //create the glow for the clicked checker's next posible positions
+                var pos = document.getElementById(String(a+","+c))
+                if(pos != null)
+                {
+                    console.log(pos)
+                    tempGlow1 = document.createElement('td');
+                    tempGlow1.className = 'selectedSq';
+                    pos.appendChild(tempGlow1);
+                }
+            }
+            break;
+    }
+
+    //create the glow for the clicked checker
+    var tempGlow = document.createElement('td');
+    tempGlow.className = 'selected';
+    checker.appendChild(tempGlow);
+
+}
+
+function moveChecker(currentLocation, nextLocations) {
+
+
 
 /*
     in order for a checker to move, we must know where it is located
