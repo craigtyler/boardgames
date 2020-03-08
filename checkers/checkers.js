@@ -1,4 +1,4 @@
-var turn = 'black',
+var turnBlack = true,
     bCaptures,
     rCaptures
     board = [['','','','','','','','','',''],
@@ -89,6 +89,7 @@ function createAndPlacePieces() {
                 checker.addEventListener('click',handleTurn,false);
                 cell.appendChild(checker);
             }   
+            //last 3 rows of board
             else if(counter > 34)
             {
                 board[ cords[0] ] [ cords[1] ] = 'bp';
@@ -98,6 +99,7 @@ function createAndPlacePieces() {
                 checker.addEventListener('click',handleTurn,false);
                 cell.appendChild(checker);
             }
+            //then every other spot on board
             else{
                 board[ cords[0] ] [ cords[1] ] = 'b';
                 var overlayBoard = document.createElement('td');
@@ -108,7 +110,6 @@ function createAndPlacePieces() {
             counter++;
         }
     })
-    console.log(board);
 }
 
 function handleTurn(e) {
@@ -124,78 +125,88 @@ function handleTurn(e) {
     var glowRight
     var glowChecker
     
+    console.log(this.id + "" + this.className)
+    
     if(boardPos != 'b')
     {
-      var movement = this.className;
       var canMove = false;
-      console.log(movement)
-        switch(movement){
-            case "checkerRed":
-                
-                var tempDown = parseInt(cords[0]) + 1;
-                var tempLeft = parseInt(cords[1]) + 1;
-                var tempRight = parseInt(cords[1]) - 1;
-                
-                if(board[tempDown][tempRight] == 'b')
-                {
-                    var tablePos = document.getElementById(tempDown+","+tempRight)
-                    glowRight = document.createElement('td');
-                    glowRight.className = 'selectedSq';
-                    glowRight.addEventListener('click',moveChecker,false)
-                    tablePos.appendChild(glowRight)
-                    if(canMove != true && glowRight != undefined)
-                        canMove = true;
+        switch(turnBlack){
+            //if it's reds turn
+            case false:
+                if(this.className === 'checkerRed'){
+                    var tempDown = parseInt(cords[0]) + 1;
+                    var tempLeft = parseInt(cords[1]) + 1;
+                    var tempRight = parseInt(cords[1]) - 1;
+                    
+                    console.log('down is:'+tempDown + ' left is '+tempLeft+ ' right is '+ tempRight)
+                    
+                    //!build in a check for if we're going to jump an opposing color's piece
+                    //attach the id of the SENDERS (meaning the checker that was clicked that is generating these glows), and use that to remove previous checker
+                    if(board[tempDown][tempRight] == 'b')
+                    {
+                        console.log('can make right glow')
+                        var tablePos = document.getElementById(tempDown+","+tempRight)
+                        glowRight = document.createElement('td');
+                        glowRight.id = this.id
+                        glowRight.className = 'selectedSq';
+                        glowRight.addEventListener('click',moveChecker,false)
+                        tablePos.appendChild(glowRight)
+                        if(canMove != true && glowRight != undefined)
+                            canMove = true;
+                    }
+                    else{
+                        console.log('board bust R')
+                    }
+                    
+                    if(board[tempDown][tempLeft] == 'b')
+                    {
+                        console.log('can make left')
+                        
+                        var tablePos = document.getElementById(tempDown+","+tempLeft)
+                        glowLeft = document.createElement('td');
+                        glowLeft.id = this.id
+                        glowLeft.className = 'selectedSq';
+                        glowLeft.addEventListener('click',moveChecker,false)
+                        tablePos.appendChild(glowLeft)
+                        if(canMove != true && glowLeft != undefined)
+                            canMove = true;
+                    }else{
+                        console.log('board bust L')
+                    }
                 }
-                
-                if(board[tempDown][tempLeft] == 'b')
-                {
-                    var tablePos = document.getElementById(tempDown+","+tempLeft)
-                    glowLeft = document.createElement('td');
-                    glowLeft.className = 'selectedSq';
-                    glowLeft.addEventListener('click',moveChecker,false)
-                    tablePos.appendChild(glowLeft)
-                    if(canMove != true && glowLeft != undefined)
-                        canMove = true;
-                }
-               
                 break;
-            case "checkerBlack":
-                console.log('move up');
-                console.log('current Location is ' + cords)
-                var tempUp = parseInt(cords[0]) - 1;
-                var tempLeft = parseInt(cords[1]) - 1;
-                var tempRight = parseInt(cords[1]) + 1;
-                
-                if(board[tempUp][tempRight] == 'b')
-                {
-                    console.log('do something')
-                    var tablePos = document.getElementById(tempUp+","+tempRight)
-                    glowRight = document.createElement('td');
-                    glowRight.className = 'selectedSq';
-                    glowRight.addEventListener('click',moveChecker,false)
-                    tablePos.appendChild(glowRight)
-                    if(canMove != true && glowRight != undefined)
-                        canMove = true;
+            //if it is blacks turn    
+            case true:
+                if(this.className === 'checkerBlack'){
+                    var tempUp = parseInt(cords[0]) - 1;
+                    var tempLeft = parseInt(cords[1]) - 1;
+                    var tempRight = parseInt(cords[1]) + 1;
+                    
+                    if(board[tempUp][tempRight] == 'b')
+                    {
+                        var tablePos = document.getElementById(tempUp+","+tempRight)
+                        glowRight = document.createElement('td');
+                        glowRight.id = this.id
+                        glowRight.className = 'selectedSq';
+                        glowRight.addEventListener('click',moveChecker,false)
+                        tablePos.appendChild(glowRight)
+                        if(canMove != true && glowRight != undefined)
+                            canMove = true;
+                    }
+                    
+                    if(board[tempUp][tempLeft] == 'b')
+                    {
+                         var tablePos = document.getElementById(tempUp+","+tempLeft)
+                        glowLeft = document.createElement('td');
+                        glowLeft.className = 'selectedSq';
+                        glowLeft.id = this.id
+                        glowLeft.addEventListener('click',moveChecker,false)
+                        tablePos.appendChild(glowLeft)
+                        if(canMove != true && glowLeft != undefined)
+                            canMove = true;
+                    }       
                 }
-                
-                if(board[tempUp][tempLeft] == 'b')
-                {
-                    console.log('do something')
-                     var tablePos = document.getElementById(tempUp+","+tempLeft)
-                    glowLeft = document.createElement('td');
-                    glowLeft.className = 'selectedSq';
-                    glowLeft.addEventListener('click',moveChecker,false)
-                    tablePos.appendChild(glowLeft)
-                    if(canMove != true && glowLeft != undefined)
-                        canMove = true;
-                }
-                console.log(tempUp)
-                console.log(tempRight + 'L')
-                console.log(tempLeft + 'R')
                 //showAvaliableMoves(this)
-                break;
-            case "uncaught":
-                console.log("uh oh");
                 break;
         }
         if(canMove){
@@ -207,16 +218,62 @@ function handleTurn(e) {
             this.appendChild(glowChecker)
             
             //then move the checker piece to a location.
+            //once clicked, remove this piece
+            
         }
     }
-    
 }
 
 function moveChecker(e){
     //get getElementById/byclass for 'selected' checker
     //delete it, create a new checker at new location aka this location
     //update board accordingly
-    checkForGlows();
+    
+    
+    var currentSq = this.parentElement
+    
+    checkForGlows()
+    
+    var oldCords = this.id.split(',')
+    var newCords = currentSq.id.split(',');
+    
+    
+    var newChecker = document.createElement('td')
+    
+    console.log(this.id)
+    console.log(currentSq.id)
+    
+    newChecker.id = currentSq.id;
+
+    
+    board[oldCords[0]] [oldCords[1]] = 'b'
+    
+    
+    newChecker.addEventListener('click',handleTurn,false)
+    currentSq.appendChild(newChecker);
+    
+    if(turnBlack){
+        newChecker.className = 'checkerBlack'
+        board[ newCords[0] ] [ newCords[1] ] = 'bp'
+    }else{
+        newChecker.className = 'checkerRed'
+        board[ newCords[0] ] [ newCords[1] ] = 'rp'
+    }
+    
+    var toRemove 
+    
+    if(turnBlack){
+        toRemove = document.getElementById(this.id).getElementsByClassName('checkerBlack')[0]
+    }
+    else{
+        toRemove = document.getElementById(this.id).getElementsByClassName('checkerRed')[0]
+    }
+    
+    toRemove.remove()
+    
+    turnBlack = turnBlack == true ? false : true;
+    
+    
 }
 
 function checkForGlows(){
